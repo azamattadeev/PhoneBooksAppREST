@@ -25,4 +25,8 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     private List<PhoneBookEntry> contacts;
 
+    public User(String name) {
+        this.name = name;
+    }
+
 }

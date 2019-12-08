@@ -1,4 +1,4 @@
-package phonebooks;
+package phonebooks.servicestests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import phonebooks.services.UserService;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class UserServiceTest {
+public class UserServiceTests {
 
     @Autowired
     private UserService userService;
@@ -26,7 +26,7 @@ public class UserServiceTest {
         User user = createSam();
         Long id = user.getId();
         user.setName("Alex");
-        userService.update(user);
+        userService.update(id, user);
         assertEquals(userService.getById(id).getName(), "Alex");
     }
 

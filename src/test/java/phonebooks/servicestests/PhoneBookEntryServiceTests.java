@@ -1,4 +1,4 @@
-package phonebooks;
+package phonebooks.servicestests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import phonebooks.services.UserService;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class PhoneBookEntryServiceTest {
+public class PhoneBookEntryServiceTests {
 
     @Autowired
     private PhoneBookEntryService phoneBookEntryService;
