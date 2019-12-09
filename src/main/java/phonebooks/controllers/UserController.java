@@ -57,4 +57,9 @@ public class UserController {
         }
     }
 
+    @GetMapping("/name/{part-of-name}")
+    public List<User> getUsersByPartOfName(@PathVariable("part-of-name") String partOfName) {
+        return userService.getUsersByPartOfName(partOfName);
+    }
+
 }

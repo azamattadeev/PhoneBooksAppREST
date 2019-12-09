@@ -126,6 +126,17 @@ public class UserStorage {
         return entries;
     }
 
+    public List<User> getUsersByPartOfName(String partOfName) {
+        partOfName = partOfName.toLowerCase();
+        List<User> suitableUsers = new ArrayList<>();
+        for (User user : users.values()) {
+            if (user.getName().toLowerCase().contains(partOfName)) {
+                suitableUsers.add(user);
+            }
+        }
+        return suitableUsers;
+    }
+
     private Long getNextUserId() {
         return nextUserId.getAndIncrement();
     }

@@ -46,4 +46,8 @@ public class UserService {
         }
     }
 
+    public List<User> getUsersByPartOfName(String partOfName) {
+        return userStorage.getUsersByPartOfName(partOfName);
+    }
+
 }
