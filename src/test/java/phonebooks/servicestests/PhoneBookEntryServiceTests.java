@@ -3,7 +3,6 @@ package phonebooks.servicestests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import phonebooks.entities.PhoneBookEntry;
 import phonebooks.entities.User;
 import phonebooks.services.PhoneBookEntryService;

@@ -2,7 +2,6 @@ package phonebooks.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import phonebooks.entities.PhoneBookEntry;
 import phonebooks.stores.UserStorage;
 
@@ -35,6 +34,10 @@ public class PhoneBookEntryService {
 
     public List<PhoneBookEntry> getAll() {
         return userStorage.getAllPhoneBookEntries();
+    }
+
+    public List<PhoneBookEntry> getAllPhoneBookEntriesByUserId(Long id) {
+        return userStorage.getAllPhoneBookEntriesByUserId(id);
     }
 
 }

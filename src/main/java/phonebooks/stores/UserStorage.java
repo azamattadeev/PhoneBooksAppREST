@@ -104,6 +104,14 @@ public class UserStorage {
         return false;
     }
 
+    public List<PhoneBookEntry> getAllPhoneBookEntriesByUserId(Long id) {
+        if (users.containsKey(id)) {
+            return new ArrayList<>(users.get(id).getContacts().values());
+        } else {
+            return null;
+        }
+    }
+
     private Long getNextUserId() {
         return nextUserId.getAndIncrement();
     }

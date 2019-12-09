@@ -68,4 +68,15 @@ public class PhoneBookEntryController {
         }
     }
 
+    @GetMapping("/user/{id}/contacts")
+    public ResponseEntity<List<PhoneBookEntry>> getAllPhoneBookEntriesByUserId(@PathVariable("id") Long id) {
+        List<PhoneBookEntry> entries = entryService.getAllPhoneBookEntriesByUserId(id);
+        if (entries != null) {
+            return ResponseEntity.ok(entries);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }
