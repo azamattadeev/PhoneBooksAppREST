@@ -1,45 +1,46 @@
 package phonebooks.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import phonebooks.entities.User;
-import phonebooks.repositories.UserRepository;
+import phonebooks.stores.UserStorage;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class UserService {
-    private UserRepository repository;
+    private UserStorage userStorage;
 
-    public UserService (UserRepository repository) {
-        this.repository = repository;
+    @Autowired
+    public UserService (UserStorage userStorage) {
+        this.userStorage = userStorage;
     }
 
     public User create(User user) {
-        return repository.save(user);
+        return userStorage.saveUser(user);
     }
 
     public List<User> getAll(){
-        return repository.findAll();
+        return userStorage.getAllUsers();
     }
 
     public User getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return userStorage.getUserById(id);
     }
 
     public User update(Long id, User user) {
-        if(repository.existsById(id)) {
+        if(userStorage.existsUserById(id)) {
             user.setId(id);
-            return repository.save(user);
+            return userStorage.updateUser(user);
         } else {
             return null;
         }
     }
 
     public boolean deleteById(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
+        if (userStorage.existsUserById(id)) {
+            userStorage.deleteUserById(id);
             return true;
         } else {
             return false;

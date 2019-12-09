@@ -1,31 +1,31 @@
 package phonebooks.entities;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "USER_TABLE")
+@EqualsAndHashCode
 public class User implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Please enter user's name")
+    @NotEmpty(message = "Please enter user's name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<PhoneBookEntry> contacts;
+    private HashMap<Long, PhoneBookEntry> contacts;
+
+    public User() {
+        contacts = new HashMap<>();
+    }
 
     public User(String name) {
+        this();
         this.name = name;
     }
 

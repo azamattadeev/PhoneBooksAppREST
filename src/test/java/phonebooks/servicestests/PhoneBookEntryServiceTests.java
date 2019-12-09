@@ -21,20 +21,21 @@ public class PhoneBookEntryServiceTests {
     private UserService userService;
 
     @Test
-    @Transactional
     void phoneBookEntryCreationTest() {
         String phoneNumber = "+37777777777";
-        User user = createUserInDb("Alex");
+        User user = createUserInStorage("Alex");
 
-        PhoneBookEntry entry1 = new PhoneBookEntry();
-        entry1.setContactName("Mandy");
-        entry1.setPhoneNumber(phoneNumber);
+        PhoneBookEntry entry = new PhoneBookEntry();
+        entry.setContactName("Mandy");
+        entry.setPhoneNumber(phoneNumber);
 
-        phoneBookEntryService.create(user.getId(), entry1);
-        assertEquals(userService.getById(user.getId()).getContacts().get(0).getPhoneNumber(), phoneNumber);
+        entry = phoneBookEntryService.create(user.getId(), entry);
+
+        String phoneNumberFromStorage = userService.getById(user.getId()).getContacts().get(entry.getId()).getPhoneNumber();
+        assertEquals(phoneNumber, phoneNumberFromStorage);
     }
 
-    private User createUserInDb(String name) {
+    private User createUserInStorage(String name) {
         User user = new User();
         user.setName(name);
         return userService.create(user);

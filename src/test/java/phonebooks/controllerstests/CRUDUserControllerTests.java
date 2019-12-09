@@ -13,8 +13,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import phonebooks.PhonebooksApplication;
 import phonebooks.controllers.UserController;
 import phonebooks.entities.User;
-import phonebooks.repositories.UserRepository;
 import phonebooks.services.UserService;
+import phonebooks.stores.UserStorage;
 
 import java.util.Arrays;
 
@@ -23,7 +23,7 @@ import static phonebooks.ObjectMapping.mapFromJson;
 import static phonebooks.ObjectMapping.mapToJson;
 
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {UserController.class, UserService.class, UserRepository.class})
+@ContextConfiguration(classes = {UserController.class, UserService.class, UserStorage.class})
 @SpringBootTest(classes = PhonebooksApplication.class)
 public class CRUDUserControllerTests {
 
@@ -34,7 +34,7 @@ public class CRUDUserControllerTests {
     private UserService userService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserStorage userStorage;
 
     private final String USER_URI = "/user/";
 
@@ -131,8 +131,8 @@ public class CRUDUserControllerTests {
 
         User[] usersFromResponse = mapFromJson(mvcResult.getResponse().getContentAsString(), User[].class);
 
-        // Checking that the number of users in response is equal number of users in repository
-        assertEquals(userRepository.findAll().size(), usersFromResponse.length);
+        // Checking that the number of users in response is equal number of users in storage
+        assertEquals(userStorage.getAllUsers().size(), usersFromResponse.length);
     }
 
     @Test

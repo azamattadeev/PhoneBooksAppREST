@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import phonebooks.entities.PhoneBookEntry;
 import phonebooks.services.PhoneBookEntryService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class PhoneBookEntryController {
     @PostMapping("/user/{id}/contacts")
     public ResponseEntity addEntryForUser(
             @PathVariable("id") Long id,
-            @RequestBody PhoneBookEntry entry
+            @Valid @RequestBody PhoneBookEntry entry
     ) {
         entry = entryService.create(id, entry);
         if (entry != null) {
@@ -51,7 +52,7 @@ public class PhoneBookEntryController {
     @PutMapping(PHONE_BOOK_ENTRY_URI + "/{id}")
     public ResponseEntity deleteEntry(
             @PathVariable("id") Long id,
-            @RequestBody PhoneBookEntry entry
+            @Valid @RequestBody PhoneBookEntry entry
     ) {
         entry = entryService.update(id, entry);
         if (entry != null) return ResponseEntity.noContent().build();

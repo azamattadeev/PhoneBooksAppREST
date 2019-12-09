@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import phonebooks.entities.User;
 import phonebooks.services.UserService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity addUser(@RequestBody User user) {
+    public ResponseEntity addUser(@Valid @RequestBody User user) {
         user = userService.create(user);
         return ResponseEntity.created(URI.create("/user/" + user.getId())).build();
     }
@@ -38,7 +39,10 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+    public ResponseEntity updateUser(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody User user
+    ) {
         user = userService.update(id, user);
         if (user != null) return ResponseEntity.noContent().build();
         else return ResponseEntity.notFound().build();

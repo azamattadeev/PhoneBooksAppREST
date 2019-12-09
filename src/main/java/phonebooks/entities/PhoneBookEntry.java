@@ -1,28 +1,26 @@
 package phonebooks.entities;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
-@Entity
 public class PhoneBookEntry implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Please enter user's name")
+    @NotEmpty(message = "Please enter user's name")
     private String contactName;
 
-    @NotNull
+    @NotNull(message = "Please enter user's name")
+    @NotEmpty(message = "Please enter user's name")
     private String phoneNumber;
 
 }
