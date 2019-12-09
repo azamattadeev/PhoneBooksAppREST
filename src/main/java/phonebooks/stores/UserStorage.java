@@ -112,6 +112,20 @@ public class UserStorage {
         }
     }
 
+    public List<PhoneBookEntry> getAllPhoneBookEntriesByPhoneNumber(String phoneNumber) {
+        List<PhoneBookEntry> entries = new ArrayList<>();
+
+        for (User user : users.values()) {
+            for (PhoneBookEntry entry : user.getContacts().values()) {
+                if (entry.getPhoneNumber().equals(phoneNumber)) {
+                    entries.add(entry);
+                }
+            }
+        }
+
+        return entries;
+    }
+
     private Long getNextUserId() {
         return nextUserId.getAndIncrement();
     }

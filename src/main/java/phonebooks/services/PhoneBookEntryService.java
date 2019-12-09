@@ -40,4 +40,8 @@ public class PhoneBookEntryService {
         return userStorage.getAllPhoneBookEntriesByUserId(id);
     }
 
+    public List<PhoneBookEntry> getAllPhoneBookEntriesByPhoneNumber(String phoneNumber) {
+        return userStorage.getAllPhoneBookEntriesByPhoneNumber(phoneNumber);
+    }
+
 }

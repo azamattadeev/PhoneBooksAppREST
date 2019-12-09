@@ -34,7 +34,7 @@ public class PhoneBookEntryController {
         }
     }
 
-    @GetMapping(PHONE_BOOK_ENTRY_URI + "/{id}")
+    @GetMapping(PHONE_BOOK_ENTRY_URI + "{id}")
     public ResponseEntity<PhoneBookEntry> getEntryById(@PathVariable("id") Long id) {
         PhoneBookEntry entry = entryService.getById(id);
         if (entry != null) {
@@ -49,7 +49,7 @@ public class PhoneBookEntryController {
         return entryService.getAll();
     }
 
-    @PutMapping(PHONE_BOOK_ENTRY_URI + "/{id}")
+    @PutMapping(PHONE_BOOK_ENTRY_URI + "{id}")
     public ResponseEntity deleteEntry(
             @PathVariable("id") Long id,
             @Valid @RequestBody PhoneBookEntry entry
@@ -59,7 +59,7 @@ public class PhoneBookEntryController {
         else return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping(PHONE_BOOK_ENTRY_URI + "/{id}")
+    @DeleteMapping(PHONE_BOOK_ENTRY_URI + "{id}")
     public ResponseEntity deleteEntry(@PathVariable("id") Long id) {
         if (entryService.deleteById(id)) {
             return ResponseEntity.noContent().build();
@@ -78,5 +78,9 @@ public class PhoneBookEntryController {
         }
     }
 
+    @GetMapping(PHONE_BOOK_ENTRY_URI + "phone-number/{phone-number}")
+    public List<PhoneBookEntry> getAllPhoneBookEntriesByPhoneNumber(@PathVariable("phone-number") String phoneNumber) {
+        return entryService.getAllPhoneBookEntriesByPhoneNumber(phoneNumber);
+    }
 
 }
