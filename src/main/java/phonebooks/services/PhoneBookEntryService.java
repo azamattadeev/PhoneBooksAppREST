@@ -8,6 +8,7 @@ import phonebooks.entities.User;
 import phonebooks.repositories.PhoneBookEntryRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -24,23 +25,39 @@ public class PhoneBookEntryService {
     public PhoneBookEntry create(Long ownerId, PhoneBookEntry entry) {
         PhoneBookEntry saved = repository.save(entry);
         User user = userService.getById(ownerId);
-        if (user.getContacts() == null) {
-            user.setContacts(new ArrayList<>());
-        }
-        user.getContacts().add(entry);
-        return saved;
+        if (user != null) {
+            if (user.getContacts() == null) {
+                user.setContacts(new ArrayList<>());
+            }
+            user.getContacts().add(entry);
+            return saved;
+        } else return null;
     }
 
-    public PhoneBookEntry findById(Long id) {
+    public PhoneBookEntry getById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public PhoneBookEntry update(PhoneBookEntry phoneBookEntry) {
-        return repository.save(phoneBookEntry);
+    public PhoneBookEntry update(Long id, PhoneBookEntry phoneBookEntry) {
+        if (repository.existsById(id)) {
+            phoneBookEntry.setId(id);
+            return repository.save(phoneBookEntry);
+        } else {
+            return null;
+        }
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public boolean deleteById(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<PhoneBookEntry> getAll() {
+        return repository.findAll();
     }
 
 }

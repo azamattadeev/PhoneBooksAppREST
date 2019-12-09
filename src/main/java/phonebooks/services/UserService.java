@@ -29,9 +29,8 @@ public class UserService {
     }
 
     public User update(Long id, User user) {
-        User savedUser = repository.findById(id).orElse(null);
-        if(savedUser != null) {
-            user.setId(savedUser.getId());
+        if(repository.existsById(id)) {
+            user.setId(id);
             return repository.save(user);
         } else {
             return null;
