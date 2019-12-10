@@ -1,0 +1,50 @@
+Запросы выполнялись с помощью программы Insomnia:
+
+1) Создание пользователя:
+URI: http://localhost:8080/user/
+Тип запроса: POST
+Тело запроса: {"name":"Alex"}
+
+Код ответа: 201(Created)
+Header Location ответа: user/1
+
+2) Получение созданного пользователя:
+URI: http://localhost:8080/user/1
+Тип запроса: GET
+
+Код ответа: 200 (OK)
+Тело ответа:
+{
+  "id": 1,
+  "name": "Alex",
+  "contacts": {}
+}
+
+3) Создание телефонной записи для созданного пользователя:
+URI: http://localhost:8080/user/1/contacts
+Тип запроса: POST
+Тело запроса: {"contactName":"James Bond", "phoneNumber":"+007"}
+
+Код ответа: 201 (Created)
+Header Location ответа: /phone-book-entry/1
+
+4) Получение списка контактов нового пользователя:
+URI: http://localhost:8080/user/1/contacts
+Тип запроса: GET
+
+Код ответа: 200 (OK)
+Тело ответа:
+[
+  {
+    "id": 1,
+    "contactName": "James Bond",
+    "phoneNumber": "+007"
+  }
+]
+
+5) Попытка создания пользователя без имени:
+URI: http://localhost:8080/user/
+Тип запроса: POST
+Тело запроса: {}
+
+Код ответа: 400 (Bad request)
