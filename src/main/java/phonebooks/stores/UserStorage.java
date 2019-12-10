@@ -137,6 +137,10 @@ public class UserStorage {
         return suitableUsers;
     }
 
+    public void deleteAllUsers() {
+        users.clear();
+    }
+
     private Long getNextUserId() {
         return nextUserId.getAndIncrement();
     }

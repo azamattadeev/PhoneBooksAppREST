@@ -8,7 +8,7 @@ import phonebooks.entities.User;
 import phonebooks.services.PhoneBookEntryService;
 import phonebooks.services.UserService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class PhoneBookEntryServiceTests {

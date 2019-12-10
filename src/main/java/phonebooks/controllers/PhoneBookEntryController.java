@@ -50,7 +50,7 @@ public class PhoneBookEntryController {
     }
 
     @PutMapping(PHONE_BOOK_ENTRY_URI + "{id}")
-    public ResponseEntity deleteEntry(
+    public ResponseEntity updateEntry(
             @PathVariable("id") Long id,
             @Valid @RequestBody PhoneBookEntry entry
     ) {

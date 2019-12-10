@@ -1,5 +1,6 @@
 package phonebooks.controllerstests;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import static phonebooks.ObjectMapping.mapToJson;
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {UserController.class, UserService.class, UserStorage.class})
 @SpringBootTest(classes = PhonebooksApplication.class)
-public class CRUDUserControllerTests {
+public class UserControllerTests {
 
     @Autowired
     protected MockMvc mockMvc;
@@ -38,7 +39,7 @@ public class CRUDUserControllerTests {
 
     private final String USER_URI = "/user/";
 
-    private User[] users = {
+    private final User[] TEST_USERS = {
             new User("Alex"),
             new User("John"),
             new User("Rachel"),
@@ -48,8 +49,13 @@ public class CRUDUserControllerTests {
     };
 
     @BeforeEach
-    void addUserToDb(){
-        Arrays.asList(users).forEach(userService::create);
+    void addUserToStorage(){
+        Arrays.asList(TEST_USERS).forEach(userStorage::saveUser);
+    }
+
+    @AfterEach
+    void deleteUsersFromStorage() {
+        userStorage.deleteAllUsers();
     }
 
     @Test
@@ -131,8 +137,8 @@ public class CRUDUserControllerTests {
 
         User[] usersFromResponse = mapFromJson(mvcResult.getResponse().getContentAsString(), User[].class);
 
-        // Checking that the number of users in response is equal number of users in storage
-        assertEquals(userStorage.getAllUsers().size(), usersFromResponse.length);
+        // Checking that the number of users in response is equal number of TEST_USERS
+        assertEquals(TEST_USERS.length, usersFromResponse.length);
     }
 
     @Test
@@ -145,6 +151,27 @@ public class CRUDUserControllerTests {
 
         // Checking that response code is 404 (Not Found)
         assertEquals(404, mvcResult.getResponse().getStatus());
+    }
+
+    @Test
+    void getUsersByPartOfNameTest() throws Exception {
+        // Delete all users that were added in @BeforeEach method
+        userStorage.deleteAllUsers();
+        String[] names = {"Alex", "Alexander", "Lexus", "Bond"};
+        for (String name : names) {
+            userStorage.saveUser(new User(name));
+        }
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                .get("/user/name/lex")
+        ).andReturn();
+
+        assertEquals(200, mvcResult.getResponse().getStatus());
+
+        User[] withSuitableNames = mapFromJson(mvcResult.getResponse().getContentAsString(), User[].class);
+
+        assertEquals(3, withSuitableNames.length);
+
     }
 
 }

@@ -23,4 +23,9 @@ public class PhoneBookEntry implements Serializable {
     @NotEmpty(message = "Please enter user's name")
     private String phoneNumber;
 
+    public PhoneBookEntry(String contactName, String phoneNumber) {
+        this.contactName = contactName;
+        this.phoneNumber = phoneNumber;
+    }
+
 }
